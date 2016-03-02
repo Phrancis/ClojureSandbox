@@ -54,7 +54,7 @@
 ; The `assoc` function operates on maps and vectors.
 ; When applied to a map, it creates a new map where any number of key/value pairs are added.
 ; Values for existing keys are replaced by new values.
-(assoc alphabet 1 \Z, 5 \E, 7 \F) ; {1 Z, 2 B, 3 C, 4 D, 5 E, 7 F}
+(assoc alphabet 1 \Z, 5 \E, 7 \G) ; {1 Z, 2 B, 3 C, 4 D, 5 E, 7 F}
 (assoc popsicle-map :green :lime, :blue :blueberry) ; {:green :lime, :red :cherry, :blue :blueberry, :purple :grape}
 
 ; The `dissoc` function takes a map and any number of keys.
@@ -126,4 +126,4 @@
 ; The value it returns is used as the new value of that key.
 ; For example, a new map where the employer street is updated to add a suite number, e.g. "456 Business Ln. Suite 1000"
 ; instead of "456 Business Ln." can be created as follows:
-(println(update-in person [:employer :address :street] str " Suite 1000"))
+(update-in person [:employer :address :street] str " Suite 1000")
