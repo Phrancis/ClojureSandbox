@@ -198,3 +198,42 @@
   [coefs x]
   (reduce #(+ (* x %1) %2) coefs))
 
+; The `memoize` function takes another function and returns a new function that stores a mapping from previous arguments
+; to previous results for the given function. The new function uses the mapping to avoid invoking the given function
+; with arguments that have already been evaluated. This results in better performance, but also requires memory
+; to store the mappings.
+
+; The time macro evaluates an expression, prints the elapsed time, and returns the expression result. It is used in
+; the following code to measure the time to compute the value of a polynomial at a given x value.
+
+; The following example demonstrates memoizing a polynomial function:
+; Note the use of def instead of defn because memoize returns
+; a function that is then bound to "memo-f".
+(def memo-f (memoize f))
+(println "priming call")
+(time (f 2))
+
+(println "without memoization")
+; Note the use of an underscore for the binding that isn't used.
+(dotimes [_ 3] (time (f 2)))
+
+(println "with memoization")
+(dotimes [_ 3] (time (memo-f 2)))
+
+(comment prints
+  ;  priming call
+  ;  "Elapsed time: 0.136169 msecs"
+  ;  without memoization
+  ;  "Elapsed time: 0.145925 msecs"
+  ;  "Elapsed time: 0.059804 msecs"
+  ;  "Elapsed time: 0.040444 msecs"
+  ;  with memoization
+  ;  "Elapsed time: 0.246689 msecs"
+  ;  "Elapsed time: 0.051483 msecs"
+  ;  "Elapsed time: 0.006444 msecs"
+   There are several observations than can be made from this output. The first call to the function f, the "priming call",
+   takes considerably longer than the other calls. This is true regardless of whether memoization is used. The first call
+   to the memoized function takes longer than the first non-priming call to the original function, due to the overhead
+   of caching its result. Subsequent calls to the memoized function are much faster.
+  )
+
