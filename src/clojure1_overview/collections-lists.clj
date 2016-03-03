@@ -1,3 +1,6 @@
+(ns
+  clojure1_overview.collections-lists)
+
 ; Lists are ordered collections of items. They are ideal when new items will be added to or removed from the front (constant-time).
 ; They are not efficient (linear time) for finding items by index (using nth)
 ; and there is no efficient way to change items by index.

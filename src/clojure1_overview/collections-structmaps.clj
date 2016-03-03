@@ -1,3 +1,6 @@
+(ns
+  clojure1_overview.collections-structmaps)
+
 ; Note: StructMaps have been deprecated. Records are generally recommended instead.
 
 ; StructMaps are similar to regular maps, but are optimized to take advantage of common keys in multiple instances

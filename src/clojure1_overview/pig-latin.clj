@@ -1,3 +1,6 @@
+(ns
+  clojure1_overview.pig-latin)
+
 ; returns arg if in set, nil otherwise
 (def vowel? (set "aeiou"))
 

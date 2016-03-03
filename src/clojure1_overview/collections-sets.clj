@@ -1,3 +1,6 @@
+(ns
+  clojure1_overview.collections-sets)
+
 ; Sets are collections of unique items.
 ; They are preferred over lists and vectors when duplicates are not allowed and items do not need
 ; to be maintained in the order in which they were added.

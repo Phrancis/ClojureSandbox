@@ -1,3 +1,6 @@
+(ns
+  clojure1_overview.collections-maps)
+
 ; Maps store associations between keys and their corresponding values where both can be any kind of object.
 ; Often keywords are used for map keys.
 ; Entries can be stored in such a way that the pairs can be quickly retrieved in sorted order based on their keys.

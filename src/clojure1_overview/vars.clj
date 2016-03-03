@@ -1,3 +1,6 @@
+(ns
+  clojure1_overview.vars)
+
 (def ^:dynamic v 1) ; v is a global binding
 
 (defn f1 []

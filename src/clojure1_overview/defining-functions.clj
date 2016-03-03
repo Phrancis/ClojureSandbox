@@ -1,3 +1,6 @@
+(ns
+  clojure1_overview.defining-functions)
+
 ; The `defn` macro defines a function. Its arguments are the function name, an optional documentation
 ; string (displayed by the `doc` macro), the parameter list (specified with a vector that can be empty) and the function body.
 ; The result of the last expression in the body is returned. Every function returns a value, but it may be nil.
@@ -5,7 +8,7 @@
   "Returns a String greeting"
   [name]
   (str "Hello, " name))
-(println "(greetings \"Clojure\") :" (greetings "Clojure")) ; Hello, World
+(println "(greetings \"Clojure\") :" (greetings "Clojure")) ; Hello, Clojure
 
 ; Function definitions must appear before their first use.
 ; Sometimes this isn't possible due to a set of functions that invoke each other.

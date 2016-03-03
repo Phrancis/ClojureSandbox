@@ -1,3 +1,6 @@
+(ns
+  clojure1_overview.collections-vectors)
+
 ; Vectors are ordered collections of items. They are ideal when new items will be added to or removed
 ; from the back (constant-time). This means that using conj is more efficient than cons for adding items.
 ; They are efficient (constant time) for finding (using nth) or changing (using assoc) items by index.

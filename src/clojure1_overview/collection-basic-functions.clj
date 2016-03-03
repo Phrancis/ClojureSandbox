@@ -1,3 +1,6 @@
+(ns
+  clojure1_overview.collection-basic-functions)
+
 ; The Clojure collection types have characteristics that differ from Java's collection types.
 ; All of them are immutable, heterogeneous and persistent.
 ; Being immutable means that their contents cannot be changed.
