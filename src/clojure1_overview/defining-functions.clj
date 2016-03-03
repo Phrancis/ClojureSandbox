@@ -127,3 +127,74 @@
 ; test
 (caller callback1 10) ;36 -> 11 + 12 + 13
 (caller callback2 10) ;24 -> 11 + 13
+
+; The `complement` function returns a new function that is just like a given function,
+; but returns the opposite logical truth value.
+(defn teenager? [age] (and (>= age 13) (< age 20)))
+(def non-teen? (complement teenager?))
+(teenager? 15) ;true
+(non-teen? 15) ;false
+(non-teen? 20) ;true
+
+; The `comp` function composes a new function by combining any number of existing ones. They are called from right to left.
+(defn times2 [n] (* n 2))
+(defn minus3 [n] (- n 3))
+; Note the use of `def` instead of `defn` because comp returns a function that is then bound to "my-composition":
+(def my-composition (comp minus3 times2))
+(my-composition 4) ; 4 * 2 - 3 -> 5
+
+; The partial function creates a new function from an existing one so that it provides fixed values for initial
+; parameters and calls the original function. This is called a "partial application". For example, * is a function
+; that takes any number of arguments and multiplies them together. Suppose we want a new version of that function
+; that always multiplies by two.
+; Note the use of `def` instead of `defn` because partial returns a function that is then bound to "times2".
+(def times2 (partial * 2))
+(times2 3 4) ; 2 * 3 * 4 -> 24
+
+; **********
+; Here's an interesting use of both the `map` and `partial` functions. We'll define functions that use the `map` function
+; to compute the value of an arbitrary polynomial and its derivative for given x values. The polynomials are described
+; by a vector of their coefficients.
+; Next, we'll define functions that use `partial` to define functions for a specific polynomial and its derivative.
+; Finally, we'll demonstrate using the functions.
+; The `range` function returns a lazy sequence of integers from an inclusive lower bound to an exclusive upper bound.
+; The lower bound defaults to 0, the step size defaults to 1, and the upper bound defaults to infinity.
+; **********
+(defn- polynomial
+  "computes the value of a polynomial
+  with the given coefficients for a given value x"
+  [coefs x]
+  ; For example, if coefs contains 3 values then exponents is (2 1 0).
+  (let [exponents (reverse (range (count coefs)))]
+    ; Multiply each coefficient by x raised to the corresponding exponent
+    ; and sum those results
+    ; coefs go into %1 and exponents go into %2
+    (apply + (map #(* %1 (Math/pow x %2)) coefs exponents))))
+
+(defn- derivative
+  "computes the value of the derivative of a polynomial
+  with the given coefficients for a given value x"
+  [coefs x]
+  ; The coefficients of the derivative function are obtained by
+  ; multiplying all but the last coefficient by its corresponding exponent.
+  ; The extra exponent will be ignored.
+  (let [exponents (reverse (range (count coefs)))
+        derivative-coefs (map #(* %1 %2) (butlast coefs) exponents)]
+    (polynomial derivative-coefs x)))
+
+(def f (partial polynomial [2 1 3])) ; 2x^2 + x + 3
+(def f-prime (partial derivative [2 1 3])) ; 4x + 1
+
+(println "f(2) =" (f 2))        ; f(2) = 13.0
+(println "f'(2) =" (f-prime 2)) ; f'(2) = 9.0
+
+; Here's an another way that the polynomial function could be implemented (suggested by Francesco Strino).
+; For a polynomial with coefficients a, b and c, it computes the value for x as follows:
+; %1 = a, %2 = b, result is ax + b
+; %1 = ax + b, %2 = c, result is (ax + b)x + c = ax^2 + bx + c
+(defn- polynomial
+  "computes the value of a polynomial
+   with the given coefficients for a given value x"
+  [coefs x]
+  (reduce #(+ (* x %1) %2) coefs))
+
