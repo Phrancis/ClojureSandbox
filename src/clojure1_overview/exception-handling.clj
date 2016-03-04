@@ -6,16 +6,17 @@
 ; The try, catch, finally and throw special forms provide functionality similar to their Java counterparts.
 
 (defn collection? [obj]
+  "Prints object class to stdout then verifies if coll is either
+  a Clojure collection, or a Java Collection."
   (println "obj is a" (class obj))
-  ; Clojure collections implement clojure.lang.IPersistentCollection
   (or
-    (coll? obj) ; Clojure collection?
-    (instance? java.util.Collection obj))) ; Java collection?
+    (coll? obj)
+    (instance? java.util.Collection obj)))
 
 (defn average [coll]
   "Verify if coll is a valid, non-empty collection,
   then apply the + function to all items in coll and
-  divide by the number of items in it to find the average"
+  divide by the number of items in it to find the average."
   (when-not (collection? coll)
     (throw (IllegalArgumentException. "expected a collection")))
   (when (empty? coll)
@@ -24,9 +25,9 @@
     (/ sum (count coll))))
 
 (try
-  (println "list average =" (average '(2 3) ))
-  (println "vector average =" (average [2 3] ))
-  (println "set average =" (average #{2 3} ))
+  (println "list average ="   (average '(2 3) ))
+  (println "vector average =" (average [2 3]  ))
+  (println "set average ="    (average #{2 3} ))
   (let [arr-list (java.util.ArrayList.)]
     (doto arr-list (.add 2) (.add 3))
     (println "ArrayList average =" (average arr-list)))
