@@ -53,4 +53,16 @@ Calendar/APRIL ; works if the Calendar class was imported
   (.set Calendar/MONTH Calendar/MARCH)
   (.set Calendar/DATE 3))
 (def formatter (java.text.DateFormat/getDateInstance))
-(println (.format formatter (.getTime calendar))) ; Mar 3, 2016
+(.format formatter (.getTime calendar)) ; Mar 3, 2016
+
+; The `memfn` macro expands to code that allows a Java method to be treated as a first class function.
+; It is an alternative to using an anonymous function for calling a Java method.
+; When using `memfn` to invoke Java methods that take arguments, a name for each argument must be specified.
+; This indicates the arity of the method to be invoked. These names are arbitrary, but they must be unique because
+; they are used in the generated code. The following examples apply an instance method (`substring`) to a Java object
+; from the first collection (a String), passing the corresponding item from the second collection (an int) as an argument:
+
+(println (map #(.substring %1 %2)             ; substring method called as anonymous function
+           ["Moe" "Larry" "Curly"] [1 2 3]))  ; (oe rry ly)
+(println (map (memfn substring beginIndex)    ; substring method called as first class function
+           ["Moe" "Larry" "Curly"] [1 2 3]))  ; same
