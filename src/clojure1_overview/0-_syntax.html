@@ -1,0 +1,395 @@
+<!-- SOURCE: http://java.ociweb.com/mark/clojure/article.html#Syntax -->
+
+<h2><a name="Syntax">Clojure Syntax</a></h2>
+<p>
+    Lisp dialects have a very simple, some would say beautiful, syntax.
+    Data and code have the same representation, lists of lists
+    that can be represented in memory quite naturally as a tree.
+    <code>(a b c)</code> is a call to a function named <code>a</code>
+    with arguments <code>b</code> and <code>c</code>.
+    To make this data instead of code, the list needs to be quoted.
+    <code>'(a b c)</code> or <code>(quote (a b c))</code>
+    is a list of the values
+    <code>a</code>, <code>b</code> and <code>c</code>.
+    That's it except for some special cases.
+    The number of special cases there are depends on the dialect.
+</p>
+<p>
+    The special cases are seen by some as syntactic sugar.
+    The more of them there are, the shorter certain kinds of code become
+    and the more readers of the code have to learn and remember.
+    It's a tricky balance.
+    Many of them have an equivalent function name
+    that can be used instead.
+    I'll leave it to you to decide if Clojure
+    has too much or too little syntactic sugar.
+</p>
+<p>
+    The table below briefly describes each of the special cases
+    encountered in Clojure code.
+    These will be described in more detail later.
+    Don't try to understand everything in the table now.
+</p>
+<table border="1">
+    <tr style="background:pink">
+        <th colspan="1" rowspan="1">Purpose</th>
+        <th colspan="1" rowspan="1">Sugar</th>
+        <th colspan="1" rowspan="1">Function</th>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">comment</td>
+        <td colspan="1" rowspan="1">
+            <code>; <i>text</i></code><br />
+            for line comments</td>
+        <td colspan="1" rowspan="1">
+            <code>(comment <i>text</i>)</code> macro<br />
+            for block comments
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">
+            character literal (uses Java <code>char</code> type)</td>
+        <td colspan="1" rowspan="1">
+            <code>\<i>char</i></code>
+            <code>\tab</code><br />
+            <code>\newline</code>
+            <code>\space</code><br />
+            <code>\u<i>unicode-hex-value</i></code>
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(char <i>ascii-code</i>)</code><br />
+            <code>(char \u<i>unicode</i></code>)
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">
+            string (uses Java <code>String</code> objects)</td>
+        <td colspan="1" rowspan="1">
+            <code>"<i>text</i>"</code>
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(str <i>char1</i> <i>char2</i> ...)</code><br />
+            concatenates characters and
+            many other kinds of values to create a string.
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">
+            keyword; an interned string;
+            keywords with the same name refer to the same object;
+            often used for map keys
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>:<i>name</i></code>
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(keyword "<i>name</i>")</code>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">
+            keyword resolved in the current namespace
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>::<i>name</i></code>
+        </td>
+        <td colspan="1" rowspan="1">
+            none
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">regular expression</td>
+        <td colspan="1" rowspan="1">
+            <code>#"<i>pattern</i>"</code><br />
+            quoting rules differ from function form
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(re-pattern <i>pattern</i>)</code>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">
+            treated as whitespace;
+            sometimes used in collections to aid readability
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>,</code> (a comma)</td>
+        <td colspan="1" rowspan="1">N/A</td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">list - a linked list</td>
+        <td colspan="1" rowspan="1">
+            <code>'(<i>items</i>)</code><br />
+            doesn't evaluate items
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(list <i>items</i>)</code><br />
+            evaluates items
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">vector - similar to an array</td>
+        <td colspan="1" rowspan="1">
+            <code>[<i>items</i>]</code>
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(vector <i>items</i>)</code>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">set</td>
+        <td colspan="1" rowspan="1">
+            <code>#{<i>items</i>}</code><br />
+            creates a hash set
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(hash-set <i>items</i>)</code><br />
+            <code>(sorted-set <i>items</i>)</code>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">map</td>
+        <td colspan="1" rowspan="1">
+            <code>{<i>key-value-pairs</i>}</code><br />
+            creates a hash map
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(hash-map <i>key-value-pairs</i>)</code><br />
+            <code>(sorted-map <i>key-value-pairs</i>)</code>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">
+            add metadata to a symbol or collection
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>^{<i>key-value-pairs</i>} <i>object</i></code><br />
+            processed at read-time
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(with-meta <i>object</i> <i>metadata-map</i>)</code><br />
+            processed at run-time
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">
+            get metadata map from a symbol or collection
+        </td>
+        <td colspan="1" rowspan="1">
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(meta <i>object</i>)</code>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">
+            gather a variable number of arguments<br />
+            in a function parameter list</td>
+        <td colspan="1" rowspan="1">
+            <code>&amp; <i>name</i></code>
+        </td>
+        <td colspan="1" rowspan="1">N/A</td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">conventional name given to<br />
+            function parameters that aren't used</td>
+        <td colspan="1" rowspan="1">
+            <code>_</code> (an underscore)</td>
+        <td colspan="1" rowspan="1">N/A</td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">construct a Java object;<br />
+            note the period after the class name</td>
+        <td colspan="1" rowspan="1">
+            <code>(<i>class-name</i>. <i>args</i>)</code>
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(new <i>class-name</i> <i>args</i>)</code>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">call a Java method</td>
+        <td colspan="1" rowspan="1">
+            <code>(. <i>class-or-instance</i> <i>method-name</i> <i>args</i>)</code> or <br />
+            <code>(.<i>method-name</i> <i>class-or-instance</i> <i>args</i>)</code>
+        </td>
+        <td colspan="1" rowspan="1">none</td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">
+            call several Java methods, threading the result
+            from each into the next as its first argument;<br />
+            each method can have additional arguments
+            specified inside the parens;<br />
+            note the double period</td>
+        <td colspan="1" rowspan="1">
+            <code>(.. <i>class-or-object</i>
+                (<i>method1 args</i>) (<i>method2 args</i>) ...)</code>
+        </td>
+        <td colspan="1" rowspan="1">none</td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">create an anonymous function</td>
+        <td colspan="1" rowspan="1">
+            <code>#(<i>single-expression</i>)</code><br />
+            use <code>%</code> (same as <code>%1</code>), <code>%1</code>,
+            <code>%2</code> and so on for arguments
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(fn [<i>arg-names</i>] <i>expressions</i>)</code>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">dereference a Ref, Atom or Agent</td>
+        <td colspan="1" rowspan="1">
+            <code>@<i>ref</i></code>
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(deref <i>ref</i>)</code>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">
+            get <code>Var</code> object instead of<br />
+            the value of a symbol (var-quote)</td>
+        <td colspan="1" rowspan="1">
+            <code>#'<i>name</i></code>
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(var <i>name</i>)</code>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">syntax quote (used in macros)</td>
+        <td colspan="1" rowspan="1">
+            <code>`</code>
+        </td>
+        <td colspan="1" rowspan="1">none</td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">unquote (used in macros)</td>
+        <td colspan="1" rowspan="1">
+            <code>~<i>value</i></code>
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(unquote <i>value</i>)</code>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">unquote splicing (used in macros)</td>
+        <td colspan="1" rowspan="1">
+            <code>~@<i>value</i></code>
+        </td>
+        <td colspan="1" rowspan="1">none</td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1">auto-gensym
+            (used in macros to generate a unique symbol name)</td>
+        <td colspan="1" rowspan="1">
+            <code><i>prefix</i>#</code>
+        </td>
+        <td colspan="1" rowspan="1">
+            <code>(gensym <i>prefix</i>?)</code>
+        </td>
+    </tr>
+</table>
+
+<p>
+    Lisp dialects use prefix notation rather than
+    the typical infix notation used by most programming languages
+    for binary operators such as <code>+</code> and <code>*</code>.
+    For example, in Java one might write <code>a + b + c</code>,
+    whereas in a Lisp dialect this becomes <code>(+ a b c)</code>.
+    One benefit of this notation is that any number of arguments
+    can be specified without repeating the operator.
+    Binary operators from other languages are Lisp functions
+    that aren't restricted to two operands.
+</p>
+<p>
+    One reason Lisp code contains more parentheses
+    than code in other languages is that it also uses them
+    where languages like Java use curly braces.
+    For example, the statements in a Java method are inside curly braces,
+    whereas the expressions in a Lisp function are inside
+    the function definition which is surrounded by parentheses.
+</p>
+<p>
+    Compare the following snippets of Java and Clojure code
+    that each define a simple function and invoke it.
+    The output from both is "edray" and "orangeay".
+</p>
+<div class="code">
+<pre xml:space="preserve">
+// This is Java code.
+public class PigLatin {
+
+    public static String pigLatin(String word) {
+        char firstLetter = word.charAt(0);
+        if ("aeiou".indexOf(firstLetter) != -1) return word + "ay";
+        return word.substring(1) + firstLetter + "ay";
+    }
+
+    public static void main(String args[]) {
+        System.out.println(pigLatin("red"));
+        System.out.println(pigLatin("orange"));
+    }
+}
+</pre>
+</div>
+<div class="code">
+<pre xml:space="preserve">
+; This is Clojure code.
+; When a set is used as a function, it returns the argument if it is
+; in the set and nil otherwise.  When used in a boolean context,
+; that indicates whether the argument is in the set.
+(def vowel? (set "aeiou"))
+
+(defn pig-latin [word] ; defines a function
+  ; word is expected to be a string
+  ; which can be treated like a sequence of characters.
+  (let [first-letter (first word)] ; assigns a local binding
+    (if (vowel? first-letter)
+      (str word "ay") ; then part of if
+      (str (subs word 1) first-letter "ay")))) ; else part of if
+
+(println (pig-latin "red"))
+(println (pig-latin "orange"))
+</pre>
+</div>
+<p>
+    Clojure supports all the common data types such as booleans
+    (with literal values of <code>true</code> and <code>false</code>),
+    integers, decimals,
+    characters (see "character literal" in the table above) and strings.
+    It also supports ratios which retain a numerator and denominator
+    so numeric precision is not lost when they are used in calculations.
+</p>
+<p>
+    Symbols are used to name things.
+    These names are scoped in a namespace,
+    either one that is specified or the default namespace.
+    Symbols evaluate to their value.
+    To access the <code>Symbol</code> object itself, it must be quoted.
+</p>
+<p>
+    Keywords begin with a colon and are used as unique identifiers.
+    Examples include keys in maps and enumerated values
+    (such as <code>:red</code>, <code>:green</code>
+    and <code>:blue</code>).
+</p>
+<p>
+    It is possible in Clojure, as it is in any programming language,
+    to write code that is difficult to understand.
+    Following a few guidelines can make a big difference.
+    Write short, well-focused functions to make them
+    easier to read, test and reuse.
+    Use the "extract method" refactoring pattern often.
+    Deeply nested function calls can be hard to read.
+    Limit this nesting where possible,
+    often by using <code>let</code> to break
+    complicated expressions into several less complicated expressions.
+    Passing anonymous functions to named functions is common.
+    However, avoid passing anonymous functions
+    to other anonymous functions
+    because such code is difficult to read.
+</p>

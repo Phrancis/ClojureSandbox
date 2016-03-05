@@ -1,5 +1,5 @@
 (ns
-  clojure1_overview.threads)
+  clojure1_overview.5-threads)
 
 ; All Clojure functions implement both the java.lang.Runnable interface and the java.util.concurrent.Callable interface.
 ; This makes it easy to execute them in new Java threads. For example:

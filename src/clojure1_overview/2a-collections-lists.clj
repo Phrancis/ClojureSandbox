@@ -1,5 +1,5 @@
 (ns
-  clojure1_overview.collections-lists)
+  clojure1_overview.2a-collections-lists)
 
 ; Lists are ordered collections of items. They are ideal when new items will be added to or removed from the front (constant-time).
 ; They are not efficient (linear time) for finding items by index (using nth)

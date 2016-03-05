@@ -1,5 +1,5 @@
 (ns
-  clojure1_overview.add-test
+  clojure1_overview.0-add-test
   (:use clojure.test))
 
 (defn add [x y]

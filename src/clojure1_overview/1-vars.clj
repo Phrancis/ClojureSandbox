@@ -1,5 +1,5 @@
 (ns
-  clojure1_overview.vars)
+  clojure1_overview.1-vars)
 
 (def ^:dynamic v 1) ; v is a global binding
 

@@ -1,5 +1,5 @@
 (ns
-  clojure1_overview.sequences
+  clojure1_overview.11-sequences
   (:use [clojure.repl :only (source)]))
 
 ; Sequences are logical views of collections. Many things can be treated as sequences.

@@ -1,5 +1,5 @@
 (ns
-  clojure1_overview.java-interoperability)
+  clojure1_overview.4-java-interoperability)
 
 ; Clojure programs can use all Java classes and interfaces. As in Java, classes in the `java.lang` package can be used without
 ; importing them. Java classes in other packages can be used by either specifying their package when referencing them

@@ -1,5 +1,5 @@
 (ns
-  clojure1_overview.exception-handling)
+  clojure1_overview.6-exception-handling)
 
 ; All exceptions thrown by Clojure code are runtime exceptions.
 ; Java methods invoked from Clojure code can still throw checked exceptions.

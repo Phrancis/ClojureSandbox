@@ -1,5 +1,5 @@
 (ns
-  clojure1_overview.predicates
+  clojure1_overview.10-predicates
   (:use [clojure.repl :only (source)]))
 
 ; Clojure provides many functions that act as predicates, used to test a condition. They return a value that can be

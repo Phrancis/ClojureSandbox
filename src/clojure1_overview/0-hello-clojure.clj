@@ -1,5 +1,5 @@
 (ns
-  clojure1_overview.hello-clojure)
+  clojure1_overview.0-hello-clojure)
 
 ; a line comment
 (comment

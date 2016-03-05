@@ -1,5 +1,5 @@
 (ns
-  clojure1_overview.iteration
+  clojure1_overview.8-iteration
   (:use [clojure.repl :only (source)]))
 
 ; There are many ways to "loop" or iterate through items in a sequence.

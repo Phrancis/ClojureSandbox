@@ -1,5 +1,5 @@
 (ns
-  clojure1_overview.defining-functions)
+  clojure1_overview.3-defining-functions)
 
 ; The `defn` macro defines a function. Its arguments are the function name, an optional documentation
 ; string (displayed by the `doc` macro), the parameter list (specified with a vector that can be empty) and the function body.

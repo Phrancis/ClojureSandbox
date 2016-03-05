@@ -1,5 +1,5 @@
 (ns
-  clojure1_overview.collections-structmaps)
+  clojure1_overview.2e-collections-structmaps)
 
 ; Note: StructMaps have been deprecated. Records are generally recommended instead.
 

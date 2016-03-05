@@ -1,5 +1,5 @@
 (ns
-  clojure1_overview.collection-basic-functions)
+  clojure1_overview.2-collection-basic-functions)
 
 ; The Clojure collection types have characteristics that differ from Java's collection types.
 ; All of them are immutable, heterogeneous and persistent.

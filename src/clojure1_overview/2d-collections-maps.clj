@@ -1,5 +1,5 @@
 (ns
-  clojure1_overview.collections-maps)
+  clojure1_overview.2d-collections-maps)
 
 ; Maps store associations between keys and their corresponding values where both can be any kind of object.
 ; Often keywords are used for map keys.

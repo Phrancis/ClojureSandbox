@@ -1,5 +1,5 @@
 (ns
-  clojure1_overview.conditional-processing)
+  clojure1_overview.7-conditional-processing)
 
 (import '(java.util Calendar GregorianCalendar))
 
