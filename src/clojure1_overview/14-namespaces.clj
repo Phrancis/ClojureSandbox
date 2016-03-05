@@ -11,6 +11,9 @@
 ; LIST OF STANDARD CLOJURE NAMESPACES:
 ;;; http://clojure.github.io/clojure/
 
+; ONLY THE BASICS ARE COVERED HERE
+; READ MORE: http://java.ociweb.com/mark/clojure/article.html#Namespaces
+
 
 ; Java groups methods in classes and classes in packages. Clojure groups things that are named by symbols
 ; in namespaces. These include Vars, Refs, Atoms, Agents, functions, macros and namespaces themselves.
