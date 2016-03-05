@@ -39,7 +39,7 @@
 ; It doesn't support an else part and the then part can contain any number of expressions.
 (defn summarize
   "prints the first item in a collection followed by
-  a priod for each remaining item"
+  a period for each remaining item"
   [coll]
   ; Execute the when-let body only if collection isn't empty
   (when-let [head (first coll)]
