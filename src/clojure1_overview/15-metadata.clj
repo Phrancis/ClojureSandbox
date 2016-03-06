@@ -62,3 +62,18 @@
 ;   :static true}
 ;  [coll]
 ;  (reduce1 conj () coll))
+
+(println (macroexpand '(and 2 3)))
+; (let* [and__4233__auto__ 2] (if and__4233__auto__ (clojure.core/and 3) and__4233__auto__))
+(source and)
+;(defmacro and
+;  "Evaluates exprs one at a time, from left to right. If a form
+;  returns logical false (nil or false), and returns that value and
+;  doesn't evaluate any of the other expressions, otherwise it returns
+;  the value of the last expr. (and) returns true."
+;  {:added "1.0"}
+;  ([] true)
+;  ([x] x)
+;  ([x & next]
+;    `(let [and# ~x]
+;       (if and# (and ~@next) and#))))
