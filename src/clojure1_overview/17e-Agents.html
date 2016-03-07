@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h3><a name="Agents">Agents</a></h3>
+<p>
+    Agents are used to run tasks in separate threads
+    that typically don't require coordination.
+    They are useful for modifying the state of a single object
+    which is the value of the agent.
+    This value is changed by running an "action" in a separate thread.
+    An action is a function that takes the current value of the Agent
+    as its first argument and optionally takes additional arguments.
+    <b>Only one action at a time will be run on a given Agent.</b>
+</p>
+<p>
+    The <code>agent</code> function creates a new Agent.
+    For example:
+</p>
+<div class="code">
+<pre xml:space="preserve">
+(def my-agent (agent <i>initial-value</i>))
+</pre>
+</div>
+<p>
+    The <code>send</code> function dispatches an action to an Agent
+    and returns immediately instead of waiting for the action to complete.
+    The action is executed in a thread from a supplied thread pool.
+    When the action completes, its return value will be assigned to the Agent.
+    The <code>send-off</code> function is similar,
+    but uses threads from a different pool.
+</p>
+<p>
+    The <code>send</code> function uses a "fixed thread pool"
+    (see the
+    <a href="http://java.sun.com/javase/6/docs/api/java/util/concurrent/Executors.html#newFixedThreadPool(int)">newFixedThreadPool</a>
+    method in java.util.concurrent.Executors)
+    where the number of threads is the number of processors plus two.
+    If all of those threads are busy,
+    the action doesn't run until one becomes available.
+    The <code>send-off</code> function uses a "cached thread pool"
+    (see the
+    <a href="http://java.sun.com/javase/6/docs/api/java/util/concurrent/Executors.html#newCachedThreadPool()">newCachedThreadPool</a>
+    method in java.util.concurrent.Executors)
+    where existing threads in the pool are used if available
+    and new threads are added otherwise.
+</p>
+<p>
+    If the <code>send</code> or <code>send-off</code> functions
+    are invoked from inside a transaction,
+    the action isn't actually sent until the transaction commits.
+    This is somewhat similar to calling
+    the <code>commute</code> function on a Ref in the sense that
+    the calls that determine the value to retain
+    occur at the end of the transaction.
+</p>
+<p>
+    Inside actions, the Agent on which they are operating
+    is bound to the symbol <code>*agent*</code>.
+</p>
+<p>
+    The <code>await</code> function takes any number of Agents
+    and blocks the current thread until all actions
+    that thread has dispatched to those Agents have completed.
+    The <code>await-for</code> function is similar,
+    but takes a timeout in milliseconds as its first argument.
+    If the actions complete before the timeout occurs,
+    it returns a non-<code>nil</code> value.
+    Otherwise it returns <code>nil</code>.
+    The <code>await</code> and <code>await-for</code> functions
+    cannot be called inside a transaction.
+</p>
+<p>
+    If an action throws an exception then dereferencing
+    the Agent to which it was sent will also throw an exception.
+    The exceptions thrown in all actions that have been sent to a given Agent
+    can be retrieved by calling the <code>agent-errors</code> function.
+    The <code>clear-agent-errors</code> function
+    clears the collection of exceptions for a given Agent.
+</p>
+<p>
+    The <code>shutdown-agents</code> function waits for the
+    execution of all actions already sent to all Agents to complete.
+    It then stops all the threads in the thread pools
+    that are used by Agents.
+    After this has been called, no new actions can be sent.
+    Calling <code>shutdown-agents</code> is necessary to allow
+    the JVM to exit in an orderly manner because
+    the threads in the Agent thread pools are not daemon threads.
+</p>
+</body>
+</html>
