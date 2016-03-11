@@ -1,10 +1,9 @@
 (ns
   ^{:author Phrancis}
-  sandbox.HackerRankProjectEuler34
-  (:use clojure.test))
+  sandbox.HackerRankProjectEuler34)
 
 ;; HackerRank Project Euler #34: Digit factorials
-;; https://www.hackerrank.com/contests/projecteuler/challenges/euler034
+;; https://www.hackerrank.com/contests/projecteuler/challenges/euler034 
 
 (defmacro throw-number-exc
   "Shortcut 'not a number' exception with optional argument"
@@ -37,7 +36,6 @@
       ;; Maps a lambda expr which converts a char to base-10 digit
       ;; to each char of a string representation of N.
       (map #(Character/digit % 10) (str N))
-      ;(throw (IllegalArgumentException. "Input is not a number")))))
       (throw-number-exc N))))
 
 (defn sum-of-factorials-of-digits
@@ -71,7 +69,7 @@
   (if (number? N)
     (if (and (>= N 10) (<= N (exponent 10 5)))
       (reduce + (list-all-curious-numbers-between 10 N))
-      (throw-number-exc N "Number is not 10 ≤ N ≤ 10^5:"))
+      (throw-number-exc N "Number is not 10 <= N <= 10^5: "))
     (throw-number-exc N)))
 
 (defn -main
@@ -82,14 +80,13 @@
 ;  (time (println "Curious Numbers to 10^4:" (list-all-curious-numbers-between 10 (exponent 10 4))))
 ;  (time (println "Curious Numbers to 10^5:" (list-all-curious-numbers-between 10 (exponent 10 5))))
 ;  (time (println "Curious Numbers to 10^6:" (list-all-curious-numbers-between 10 (exponent 10 6))))
-; BROKEN:
-;  (print "Enter number: ")
-;  (let [N (read-line)]
-;    (println (is-curious-number N)))
-;  )
-  (println (try (sum-all-curious-numbers-up-to 5) (catch Exception e (println e)))) ; exception
-  (println (sum-all-curious-numbers-up-to 20))
-  (println (try (sum-all-curious-numbers-up-to (exponent 11 5)) (catch Exception e (println e)))) ; exception
+  (time (println (try (sum-all-curious-numbers-up-to 5) (catch Exception e (println e)))))
+  (time (println (try (sum-all-curious-numbers-up-to (exponent 11 5)) (catch Exception e (println e)))))
+  (time (println (sum-all-curious-numbers-up-to 20)))
+  (time (println (sum-all-curious-numbers-up-to (exponent 10 2))))
+  (time (println (sum-all-curious-numbers-up-to (exponent 10 3))))
+  (time (println (sum-all-curious-numbers-up-to (exponent 10 4))))
+  (time (println (sum-all-curious-numbers-up-to (exponent 10 5))))
   )
 
 (-main)
