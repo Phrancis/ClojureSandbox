@@ -49,3 +49,23 @@
   (t/is (= -5040 (factorial -7)))
   (t/is (= -40320 (factorial -8)))
   (t/is (= -362880 (factorial -9))))
+
+(println (= \0 (get "01" 0)))
+
+(t/deftest test-explode-num-to-digits
+  (t/is (thrown? IllegalArgumentException (explode-num-to-digits "foo")))
+  ;; verify that a collection of numbers passed as argument is *not* a number:
+  (t/is (thrown? IllegalArgumentException (explode-num-to-digits (vector 1 2 3))))
+  (t/is (thrown? IllegalArgumentException (explode-num-to-digits (list 1 2 3))))
+  (t/is (thrown? IllegalArgumentException (explode-num-to-digits (hash-set 1 2 3))))
+  (t/is (thrown? IllegalArgumentException (explode-num-to-digits (hash-map :1 1, :2 2, :3 3))))
+  ;; standard cases:
+  (t/is (= (list 0) (explode-num-to-digits 0)))
+  (t/is (= (list 1 2 3) (explode-num-to-digits 123)))
+  (t/is (= (list 3 2 1) (explode-num-to-digits 321)))
+  ;; special cases to be considered as numbers, including 1 or more leading zeroes:
+  (t/is (= (list 0 1) (explode-num-to-digits "01")))
+  (t/is (= (list 0 0 7) (explode-num-to-digits "007")))
+  (t/is (= (list 0 0 0 0 0 0 0) (explode-num-to-digits "0000000")))
+
+  )

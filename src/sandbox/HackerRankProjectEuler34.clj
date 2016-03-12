@@ -38,14 +38,20 @@
     (throw-number-exc N)))
 
 (defn explode-num-to-digits
-  "Given a number N, returns a list of its separate digits."
+  "Given an integer N, returns a list of its separate digits."
   [N]
-  (try
-    (if (number? N)
-      ;; Maps a lambda expr which converts a char to base-10 digit
-      ;; to each char of a string representation of N.
-      (map #(Character/digit % 10) (str N))
+  (if (number? N)
+    ;; Maps a lambda expr which converts a char to base-10 digit
+    ;; to each char of a string representation of N.
+    (map #(Character/digit % 10) (str N))
+    ;; Special case where N is a number starting with 0, represented as a string
+    ;; examples: "01", "007"
+    (if (and (string? N) (= \0 (get N 0)))
+      ;; allow leading 0s to be included in the list as part of the 'number' which was 'exploded'
+      (map #(Character/digit % 10) N)
       (throw-number-exc N))))
+
+
 
 (defn sum-of-factorials-of-digits
   "Given a number N, returns the sum of the factorials of each digit of N.
