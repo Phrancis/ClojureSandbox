@@ -96,13 +96,13 @@
 (defn -main
   [& args]
   ;; benchmark tests
-  (time (println "Curious Numbers to 10^2:" (list-all-curious-numbers-between 10 (exponent 10 2))))
-  (time (println "Curious Numbers to 10^3:" (list-all-curious-numbers-between 10 (exponent 10 3))))
-  (time (println "Curious Numbers to 10^4:" (list-all-curious-numbers-between 10 (exponent 10 4))))
-  (time (println "Curious Numbers to 10^5:" (list-all-curious-numbers-between 10 (exponent 10 5))))
-  (time (println "Sum Curious Numbers up to 10^2:" (sum-all-curious-numbers-up-to (exponent 10 2))))
-  (time (println "Sum Curious Numbers up to 10^3:" (sum-all-curious-numbers-up-to (exponent 10 3))))
-  (time (println "Sum Curious Numbers up to 10^4:" (sum-all-curious-numbers-up-to (exponent 10 4))))
-  (time (println "Sum Curious Numbers up to 10^5:" (sum-all-curious-numbers-up-to (exponent 10 5)))))
+  (print "Curious Numbers to 10^2: ") (time (list-all-curious-numbers-between 10 (exponent 10 2)))
+  (print "Curious Numbers to 10^3: ") (time (list-all-curious-numbers-between 10 (exponent 10 3)))
+  (print "Curious Numbers to 10^4: ") (time (list-all-curious-numbers-between 10 (exponent 10 4)))
+  (print "Curious Numbers to 10^5: ") (time (list-all-curious-numbers-between 10 (exponent 10 5)))
+  (print "Sum Curious Numbers up to 10^2: " ) (time (sum-all-curious-numbers-up-to (exponent 10 2)))
+  (print "Sum Curious Numbers up to 10^3: " ) (time (sum-all-curious-numbers-up-to (exponent 10 3)))
+  (print "Sum Curious Numbers up to 10^4: " ) (time (sum-all-curious-numbers-up-to (exponent 10 4)))
+  (print "Sum Curious Numbers up to 10^5: " ) (time (sum-all-curious-numbers-up-to (exponent 10 5))))
 
 (-main)
