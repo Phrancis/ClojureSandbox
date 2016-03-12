@@ -2,6 +2,7 @@
   clojure1_overview.18-automated-testing
   (use [clojure.test]))
 
+(run-all-tests)
 ;The primary automated testing framework for Clojure is the test library included in Clojure core. The following code demonstrates its main features.
 
 ; Tests can be written in separate functions

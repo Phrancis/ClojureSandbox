@@ -3,7 +3,7 @@
   sandbox.HackerRankProjectEuler34)
 
 ;; HackerRank Project Euler #34: Digit factorials
-;; https://www.hackerrank.com/contests/projecteuler/challenges/euler034 
+;; https://www.hackerrank.com/contests/projecteuler/challenges/euler034
 
 (defmacro throw-number-exc
   "Shortcut 'not a number' exception with optional argument"
@@ -17,15 +17,24 @@
 (defn exponent
   "Given a number N, returns N^x (i.e. N to the power of x)"
   [N x]
-  (reduce * (repeat x N)))
+  (if (and (number? N) (number? x))
+    (cond
+      (= N 0) 0
+      (= x 0) 1
+      (> x 0) (reduce * (repeat x N))
+      (< x 0) (/ 1 (exponent N (- x))))
+    (if (number? x)
+      (throw-number-exc N)
+      (throw-number-exc x))))
 
 (defn factorial
-  "Given a number N, returns N! (i.e., N's factorial)"
+  "Given a number N, returns N! (i.e., N factorial)"
   [N]
   (if (number? N)
-    (if (< N 2)
-      N
-      (* N (factorial (- N 1))))
+    (cond
+      (= N 0) 1
+      (>= N 1) (* N (factorial (- N 1)))
+      (<= N -1) (- (* (- N) (factorial (- (- N) 1)))))
     (throw-number-exc N)))
 
 (defn explode-num-to-digits
@@ -89,4 +98,4 @@
   (time (println (sum-all-curious-numbers-up-to (exponent 10 5))))
   )
 
-(-main)
+;;(-main)
