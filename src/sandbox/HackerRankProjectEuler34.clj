@@ -38,20 +38,22 @@
     (throw-number-exc N)))
 
 (defn explode-num-to-digits
-  "Given an integer N, returns a list of its separate digits."
+  "Given a nmber N, returns a list of its separate digits."
   [N]
   (if (number? N)
     ;; Maps a lambda expr which converts a char to base-10 digit
     ;; to each char of a string representation of N.
-    (map #(Character/digit % 10) (str N))
-    ;; Special case where N is a number starting with 0, represented as a string
-    ;; examples: "01", "007"
-    (if (and (string? N) (= \0 (get N 0)))
-      ;; allow leading 0s to be included in the list as part of the 'number' which was 'exploded'
-      (map #(Character/digit % 10) N)
+    (if (>= N 0)
+      (map #(Character/digit % 10) (str N))
+      (map #(Character/digit % 10) (str (- N))))
+    ;; Special cases where N is passed as a string, but would still be
+    ;; a valid number otherwise, including leading zeroes
+    ;; valid examples: "123", "01", "007", "-123"
+    (if (and
+          (string? N)
+          (re-matches #"[0-9]+" (clojure.string/replace-first N #"-" "")))
+      (map #(Character/digit % 10) (clojure.string/replace-first N #"-" ""))
       (throw-number-exc N))))
-
-
 
 (defn sum-of-factorials-of-digits
   "Given a number N, returns the sum of the factorials of each digit of N.
@@ -75,7 +77,11 @@
 (defn list-all-curious-numbers-between
   "Given numbers min and max, return a list of all 'Curious Numbers' from min to max inclusive."
   [min max]
-  (remove nil? (map #(when (is-curious-number %) %) (range min (+ max 1)))))
+  (if (and (number? min) (number? max))
+    (remove nil? (map #(when (is-curious-number %) %) (range min (+ max 1))))
+  (if (number? max)
+    (throw-number-exc min)
+    (throw-number-exc max))))
 
 (defn sum-all-curious-numbers-up-to
   "Given a number N between 10 and 10^5, return the sum of a list of all 'Curious Numbers' 10 to N inclusive.
@@ -90,18 +96,13 @@
 (defn -main
   [& args]
   ;; benchmark tests
-;  (time (println "Curious Numbers to 10^2:" (list-all-curious-numbers-between 10 (exponent 10 2))))
-;  (time (println "Curious Numbers to 10^3:" (list-all-curious-numbers-between 10 (exponent 10 3))))
-;  (time (println "Curious Numbers to 10^4:" (list-all-curious-numbers-between 10 (exponent 10 4))))
-;  (time (println "Curious Numbers to 10^5:" (list-all-curious-numbers-between 10 (exponent 10 5))))
-;  (time (println "Curious Numbers to 10^6:" (list-all-curious-numbers-between 10 (exponent 10 6))))
-  (time (println (try (sum-all-curious-numbers-up-to 5) (catch Exception e (println e)))))
-  (time (println (try (sum-all-curious-numbers-up-to (exponent 11 5)) (catch Exception e (println e)))))
-  (time (println (sum-all-curious-numbers-up-to 20)))
-  (time (println (sum-all-curious-numbers-up-to (exponent 10 2))))
-  (time (println (sum-all-curious-numbers-up-to (exponent 10 3))))
-  (time (println (sum-all-curious-numbers-up-to (exponent 10 4))))
-  (time (println (sum-all-curious-numbers-up-to (exponent 10 5))))
-  )
+  (time (println "Curious Numbers to 10^2:" (list-all-curious-numbers-between 10 (exponent 10 2))))
+  (time (println "Curious Numbers to 10^3:" (list-all-curious-numbers-between 10 (exponent 10 3))))
+  (time (println "Curious Numbers to 10^4:" (list-all-curious-numbers-between 10 (exponent 10 4))))
+  (time (println "Curious Numbers to 10^5:" (list-all-curious-numbers-between 10 (exponent 10 5))))
+  (time (println "Sum Curious Numbers up to 10^2:" (sum-all-curious-numbers-up-to (exponent 10 2))))
+  (time (println "Sum Curious Numbers up to 10^3:" (sum-all-curious-numbers-up-to (exponent 10 3))))
+  (time (println "Sum Curious Numbers up to 10^4:" (sum-all-curious-numbers-up-to (exponent 10 4))))
+  (time (println "Sum Curious Numbers up to 10^5:" (sum-all-curious-numbers-up-to (exponent 10 5)))))
 
-;;(-main)
+(-main)
