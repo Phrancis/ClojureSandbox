@@ -49,13 +49,7 @@
   (t/is (= (list 0) (explode-num-to-digits 0000)))
   (t/is (= (list 1 2 3) (explode-num-to-digits 123)))
   (t/is (= (list 3 2 1) (explode-num-to-digits 321)))
-  (t/is (= (list 1 2 3) (explode-num-to-digits -123)))
-  ;; special case strings to be considered as numbers, including 1 or more leading zeroes:
-  (t/is (= (list 1 2 3) (explode-num-to-digits "123")))
-  (t/is (= (list 1 2 3) (explode-num-to-digits "-123")))
-  (t/is (= (list 0 1) (explode-num-to-digits "01")))
-  (t/is (= (list 0 0 7) (explode-num-to-digits "007")))
-  (t/is (= (list 0 0 0 0 0 0 0) (explode-num-to-digits "0000000"))))
+  (t/is (= (list 1 2 3) (explode-num-to-digits -123))))
 
 (t/deftest test-sum-of-factorials-of-digits
   (t/is (thrown? IllegalArgumentException (sum-of-factorials-of-digits "foo")))

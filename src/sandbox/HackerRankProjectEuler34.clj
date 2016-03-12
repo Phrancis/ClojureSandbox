@@ -46,14 +46,7 @@
     (if (>= N 0)
       (map #(Character/digit % 10) (str N))
       (map #(Character/digit % 10) (str (- N))))
-    ;; Special cases where N is passed as a string, but would still be
-    ;; a valid number otherwise, including leading zeroes
-    ;; valid examples: "123", "01", "007", "-123"
-    (if (and
-          (string? N)
-          (re-matches #"[0-9]+" (clojure.string/replace-first N #"-" "")))
-      (map #(Character/digit % 10) (clojure.string/replace-first N #"-" ""))
-      (throw-number-exc N))))
+    (throw-number-exc N)))
 
 (defn sum-of-factorials-of-digits
   "Given a number N, returns the sum of the factorials of each digit of N.
