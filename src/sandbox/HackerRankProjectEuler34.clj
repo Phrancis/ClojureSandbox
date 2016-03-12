@@ -19,8 +19,8 @@
   [N x]
   (if (and (number? N) (number? x))
     (cond
-      (= N 0) 0
       (= x 0) 1
+      (= N 0) 0
       (> x 0) (reduce * (repeat x N))
       (< x 0) (/ 1 (exponent N (- x))))
     (if (number? x)
@@ -34,7 +34,7 @@
     (cond
       (= N 0) 1
       (>= N 1) (* N (factorial (- N 1)))
-      (<= N -1) (- (* (- N) (factorial (- (- N) 1)))))
+      (< N 0) (throw-number-exc N "Factorial for negative numbers is undefined: "))
     (throw-number-exc N)))
 
 (defn explode-num-to-digits
@@ -71,7 +71,7 @@
   (if (number? N)
     (if (= (mod (sum-of-factorials-of-digits N) N) 0)
       N
-      false)
+      nil)
     (throw-number-exc N)))
 
 (defn list-all-curious-numbers-between
@@ -105,4 +105,4 @@
   (print "Sum Curious Numbers up to 10^4: " ) (time (sum-all-curious-numbers-up-to (exponent 10 4)))
   (print "Sum Curious Numbers up to 10^5: " ) (time (sum-all-curious-numbers-up-to (exponent 10 5))))
 
-(-main)
+; (-main)

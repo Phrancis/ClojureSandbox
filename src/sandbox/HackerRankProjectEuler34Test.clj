@@ -15,7 +15,7 @@
 (t/deftest test-exponent
   (t/is (thrown? IllegalArgumentException (exponent 2 "foo")))
   (t/is (thrown? IllegalArgumentException (exponent "bar" 2)))
-  (t/is (= 0 (exponent 0 0)))
+  (t/is (= 1 (exponent 0 0)))
   (t/is (= 0 (exponent 0 2)))
   (t/is (= 1 (exponent 2 0)))
   (t/is (= 2 (exponent 2 1)))
@@ -30,6 +30,7 @@
 
 (t/deftest test-factorial
   (t/is (thrown? IllegalArgumentException (factorial "foo")))
+  (t/is (thrown? IllegalArgumentException (factorial -1)))
   (t/is (= 1 (factorial 0)))
   (t/is (= 1 (factorial 1)))
   (t/is (= 2 (factorial 2)))
@@ -39,16 +40,7 @@
   (t/is (= 720 (factorial 6)))
   (t/is (= 5040 (factorial 7)))
   (t/is (= 40320 (factorial 8)))
-  (t/is (= 362880 (factorial 9)))
-  (t/is (= -1 (factorial -1)))
-  (t/is (= -2 (factorial -2)))
-  (t/is (= -6 (factorial -3)))
-  (t/is (= -24 (factorial -4)))
-  (t/is (= -120 (factorial -5)))
-  (t/is (= -720 (factorial -6)))
-  (t/is (= -5040 (factorial -7)))
-  (t/is (= -40320 (factorial -8)))
-  (t/is (= -362880 (factorial -9))))
+  (t/is (= 362880 (factorial 9))))
 
 (t/deftest test-explode-num-to-digits
   (t/is (thrown? IllegalArgumentException (explode-num-to-digits "foo")))
@@ -76,11 +68,11 @@
 
 (t/deftest test-is-curious-number
   (t/is (thrown? IllegalArgumentException (is-curious-number "foo")))
-  (t/is (false? (is-curious-number 10)))
-  (t/is (= 19 (is-curious-number 19)))
-  (t/is (false? (is-curious-number 20)))
-  (t/is (= 56 (is-curious-number 56)))
-  (t/is (false? (is-curious-number 57))))
+  (t/is (not (is-curious-number 10)))
+  (t/is (is-curious-number 19))
+  (t/is (not (is-curious-number 20)))
+  (t/is (is-curious-number 56))
+  (t/is (not (is-curious-number 57))))
 
 (t/deftest test-list-all-curious-numbers-between
   (t/is (thrown? IllegalArgumentException (list-all-curious-numbers-between "foo" 100)))
