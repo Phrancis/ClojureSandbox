@@ -43,8 +43,6 @@
   (t/is (= 362880 (factorial 9))))
 
 (t/deftest test-explode-num-to-digits
-  (t/is (thrown? IllegalArgumentException (explode-num-to-digits "foo")))
-  ;; standard cases:
   (t/is (= (list 0) (explode-num-to-digits 0)))
   (t/is (= (list 0) (explode-num-to-digits 0000)))
   (t/is (= (list 1 2 3) (explode-num-to-digits 123)))
@@ -61,7 +59,6 @@
 ;; Curious Numbers to 10^5: (19 56 71 93 145 219 758 768 7584 7684 9696 10081 21993 40585)
 
 (t/deftest test-is-curious-number
-  (t/is (thrown? IllegalArgumentException (is-curious-number "foo")))
   (t/is (not (is-curious-number 10)))
   (t/is (is-curious-number 19))
   (t/is (not (is-curious-number 20)))
@@ -69,14 +66,11 @@
   (t/is (not (is-curious-number 57))))
 
 (t/deftest test-list-all-curious-numbers-between
-  (t/is (thrown? IllegalArgumentException (list-all-curious-numbers-between "foo" 100)))
-  (t/is (thrown? IllegalArgumentException (list-all-curious-numbers-between 10 "bar")))
   (t/is (=
           (list 19 56 71 93 145 219 758 768 7584 7684 9696 10081 21993 40585)
           (list-all-curious-numbers-between 10 (exponent 10 5)))))
 
 (t/deftest test-sum-all-curious-numbers-up-to
-  (t/is (thrown? IllegalArgumentException (sum-all-curious-numbers-up-to "foo")))
   ;; test challenge constraint: 10 ≤ N ≤ 10^5
   (t/is (thrown? IllegalArgumentException (sum-all-curious-numbers-up-to 9)))
   (t/is (thrown? IllegalArgumentException (sum-all-curious-numbers-up-to (exponent 11 5))))

@@ -40,51 +40,39 @@
 (defn explode-num-to-digits
   "Given a nmber N, returns a list of its separate digits."
   [N]
-  (if (number? N)
+  (if (>= N 0)
     ;; Maps a lambda expr which converts a char to base-10 digit
     ;; to each char of a string representation of N.
-    (if (>= N 0)
-      (map #(Character/digit % 10) (str N))
-      (map #(Character/digit % 10) (str (- N))))
-    (throw-number-exc N)))
+    (map #(Character/digit % 10) (str N))
+    (map #(Character/digit % 10) (str (- N)))))
 
 (defn sum-of-factorials-of-digits
   "Given a number N, returns the sum of the factorials of each digit of N.
   Example: N = 35 -> 3! + 5! = 6 + 120 = 126"
   [N]
-  (if (number? N)
-    (reduce + (map #(factorial %) (explode-num-to-digits N)))
-    (throw-number-exc N)))
+  (reduce + (map #(factorial %) (explode-num-to-digits N))))
 
 (defn is-curious-number
   "A 'Curious Number' is a number where the sum of the factorial of each of its digits
   is evenly divisible by the number itself.
   For example 19 is a 'Curious Number': 1! + 9! = 1 + 362880 = 362881, and 362881 % 19 = 0."
   [N]
-  (if (number? N)
-    (if (= (mod (sum-of-factorials-of-digits N) N) 0)
-      N
-      nil)
-    (throw-number-exc N)))
+  (if (= (mod (sum-of-factorials-of-digits N) N) 0)
+    N
+    nil))
 
 (defn list-all-curious-numbers-between
   "Given numbers min and max, return a list of all 'Curious Numbers' from min to max inclusive."
   [min max]
-  (if (and (number? min) (number? max))
-    (remove nil? (map #(when (is-curious-number %) %) (range min (+ max 1))))
-  (if (number? max)
-    (throw-number-exc min)
-    (throw-number-exc max))))
+  (remove nil? (map #(when (is-curious-number %) %) (range min (+ max 1)))))
 
 (defn sum-all-curious-numbers-up-to
   "Given a number N between 10 and 10^5, return the sum of a list of all 'Curious Numbers' 10 to N inclusive.
   This is as per constraint: 10 ≤ N ≤ 10^5 "
   [N]
-  (if (number? N)
-    (if (and (>= N 10) (<= N (exponent 10 5)))
-      (reduce + (list-all-curious-numbers-between 10 N))
-      (throw-number-exc N "Number is not 10 <= N <= 10^5: "))
-    (throw-number-exc N)))
+  (if (and (>= N 10) (<= N (exponent 10 5)))
+    (reduce + (list-all-curious-numbers-between 10 N))
+    (throw-number-exc N "Number is not 10 <= N <= 10^5: ")))
 
 (defn -main
   [& args]
