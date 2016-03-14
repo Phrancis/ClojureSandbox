@@ -42,14 +42,16 @@
 
 (defn with-indexes
   [coll]
-  "Given a collection, returns a list of vectors containing 
-  the indexes of items in C with their values."
+  "Given a collection, returns a list of vectors each containing 
+  the index of each item (first) along with its value (second).
+  Ex: (with-indexes [5 10 15]) ;-> ([0 5] [1 10] [2 15])"
   (map #(vector %1 %2) (range) coll))
 
 (defn filter-between-indexes
   [coll ix-first ix-last]
   "Given a collection and a first and last index (zero-indexed),
-  returns a list of the values between the indexes, inclusive."
+  returns a list of the values between the indexes, inclusive.
+  Ex: (filter-between-indexes [1 2 3 4 5] 0 2) ;-> (1 2 3)"
   (let [ix-coll (with-indexes coll)
         result (filter #(and (>= (first %) ix-first) 
                              (<= (first %) ix-last)) ix-coll)]
@@ -80,7 +82,6 @@
   ;(println (with-indexes grid-20x20)) ;; OK
   (println (filter-between-indexes grid-20x20 0 3))      ;; (89 90 95 97)
   (println (filter-between-indexes grid-20x20 380 399))  ;; (1 70 54 71 83 51 54 69 16 92 33 48 61 43 52 1 89 19 67 48)
-
   )
 
 (-main)
