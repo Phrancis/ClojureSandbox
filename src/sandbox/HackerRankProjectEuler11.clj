@@ -5,8 +5,10 @@
 ;; Project Euler #11: Largest product in a grid
 ;; https://www.hackerrank.com/contests/projecteuler/challenges/euler011
 
+(def grid-2x2 (vector 42 99 12 23))
+
 (def grid-20x20
-  (vector ;; 0-indexed
+  (vector
     89 90 95 97 38 15 00 40 00 75  4  5  7 78 52 12 50 77 91  8
     49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48  4 56 62 00
     81 49 31 73 55 79 14 29 93 71 40 67 53 88 30  3 49 13 36 65
@@ -28,9 +30,57 @@
     20 73 35 29 78 31 90  1 74 31 49 71 48 86 81 16 23 57  5 54
      1 70 54 71 83 51 54 69 16 92 33 48 61 43 52  1 89 19 67 48))
 
-;; get horizontals
-(println (map #(get grid-20x20 %) (range 0 19 1)))
-;; get verticals
-(println (map #(get grid-20x20 %) (range 0 400 20)))
-;; get diagonals
-(println (map #(get grid-20x20 %) (range 0 400 21)))
+(defn get-sqr-grid-sides
+  [grid]
+  "Given a 'square' grid, i.e., a grid whose number of 
+  horizontal items is equal to its number of vertical items,
+  returns that number. Returns nil if grid is not 'square'."
+  (let [N (Math/sqrt (count grid))]
+    (if (== N (int N))
+      (int N)
+      nil)))
+
+(defn with-indexes
+  [coll]
+  "Given a collection, returns a list of vectors containing 
+  the indexes of items in C with their values."
+  (map #(vector %1 %2) (range) coll))
+
+(defn filter-between-indexes
+  [coll ix-first ix-last]
+  "Given a collection and a first and last index (zero-indexed),
+  returns a list of the values between the indexes, inclusive."
+  (let [ix-coll (with-indexes coll)
+        result (filter #(and (>= (first %) ix-first) 
+                             (<= (first %) ix-last)) ix-coll)]
+    (map #(second %) result)))
+
+
+(defn horizontal-sums
+  [grid row num-items]
+  (let [ix-start 0
+        ix-end (- (get-sqr-grid-sides grid) (+ 1 num-items))]
+    ;;(println ix-start ix-end)
+    (vector (map ))
+    ))
+
+
+(defn -main
+  [& args]
+  ;; get horizontals
+  ;(println (map #(get grid-20x20 %) (range 0 19 1)))
+  ;; get verticals
+  ;(println (map #(get grid-20x20 %) (range 0 400 20)))
+  ;; get diagonals
+  ;(println (map #(get grid-20x20 %) (range 0 400 21)))
+  ;; grid size
+  ;(println (get-sqr-grid-sides grid-20x20)) ;; 20
+  ;(println (get-sqr-grid-sides [1 2 3 4 5])) ;; nil
+  ;(println (with-indexes grid-2x2)) ;; OK
+  ;(println (with-indexes grid-20x20)) ;; OK
+  (println (filter-between-indexes grid-20x20 0 3))      ;; (89 90 95 97)
+  (println (filter-between-indexes grid-20x20 380 399))  ;; (1 70 54 71 83 51 54 69 16 92 33 48 61 43 52 1 89 19 67 48)
+
+  )
+
+(-main)
