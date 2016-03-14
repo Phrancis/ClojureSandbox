@@ -50,7 +50,6 @@
   (t/is (= (list 1 2 3) (explode-num-to-digits -123))))
 
 (t/deftest test-sum-of-factorials-of-digits
-  (t/is (thrown? IllegalArgumentException (sum-of-factorials-of-digits "foo")))
   (t/is (= 1 (sum-of-factorials-of-digits 0)))
   (t/is (= 24 (sum-of-factorials-of-digits 4)))
   (t/is (= 9 (sum-of-factorials-of-digits 123)))
