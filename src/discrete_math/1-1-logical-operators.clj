@@ -1,3 +1,6 @@
+; This is meant to be a demonstration of the application of logical operators in code format
+; For reference purposes, mathematical notation symbols are used in the doc string of each function.
+
 (defn negation [A]
   "The statement ¬A ('not A') is true if and only if A is false, and false only if A is true"
   (not A))
@@ -41,6 +44,7 @@
            (false? B))))
 
 (defn -main [& args]
+  "MAIN: Display the result of each logical operation when applied to each possible combination of true/false values."
   (println
     "Negation:"
     \newline (negation true)    ; false
