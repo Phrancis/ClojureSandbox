@@ -20,19 +20,18 @@
     (range min max)))
 
 (defn products-of-nums-list [nums]
-  "Returns a sorted list of distinct products of each of the numbers in nums"
+  "Returns a descending order list of distinct products of each of the numbers in nums"
   {:pre (list? nums)}
-  (sort < (distinct (for [x nums y nums] (* x y)))))
+  (sort > (distinct (for [x nums y nums] (* x y)))))
 
 (defn solve-pe4 [digits]
-  "Returns largest palindrome product of all numbers with a certain number of digits"
+  "Returns list of solutions of largest palindrome products of all numbers with a certain number of digits"
   {:pre (number? digits)}
-  (apply max (filter palindrome? (products-of-nums-list (nums-with-n-digits digits)))))
-
+  (first (filter palindrome? (products-of-nums-list (nums-with-n-digits digits)))))
 
 (defn -main []
-  (println "ProjectEuler4: Largest palindrome product")
-  (println (solve-pe4 2))
-  (println (solve-pe4 3)))
+  (println (solve-pe4 2)) ; 9009
+  (println (solve-pe4 3))); correct answer
+
 (-main)
 
