@@ -7,8 +7,7 @@
 ; Find the largest palindrome made from the product of two 3-digit numbers.
 
 (defn palindrome?
-  "Returns true if x reads the same both ways.
-  Returns false for `blank` arguments: nil, empty string or only white space."
+  "Returns true if x reads the same both ways. Returns false for nil input."
   [x]
   (let [s (str x)]
        (cond
